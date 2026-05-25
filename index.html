@@ -1,0 +1,1129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Craft It - Tech Student Platform | Advertisement</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d9ff;
+            --primary-dark: #0099cc;
+            --primary-light: #66e4ff;
+            --secondary: #ff2e63;
+            --accent: #ffd700;
+            --danger: #ff4444;
+            --dark: #0a0e27;
+            --darker: #050814;
+            --light: #e8f0ff;
+            --gray-50: #1a1f3a;
+            --gray-100: #2a2f4a;
+            --gray-200: #3a3f5a;
+            --gray-300: #4a4f6a;
+            --gray-400: #6a6f8a;
+            --gray-500: #8a8faa;
+            --gray-600: #aaaac5;
+            --gray-700: #cacadf;
+            --gray-800: #eaeaff;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --info: #00ddff;
+            
+            --card-shadow: 0 20px 40px -15px rgba(0, 217, 255, 0.2);
+            --hover-shadow: 0 30px 50px -20px rgba(0, 217, 255, 0.4);
+            --glow: 0 0 15px rgba(0, 217, 255, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            overflow-x: hidden;
+        }
+
+        /* Tech Grid Background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(0, 217, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Robot/Circuit Animation */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .circuit-lines svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Animated Robot Icon */
+        .robot-animation {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            z-index: 100;
+            animation: float 4s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .robot-eye {
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow);
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            background: var(--secondary);
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            color: white;
+            margin-left: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+            background: rgba(0, 217, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a.active {
+            color: var(--primary);
+            background: rgba(0, 217, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-section h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+        }
+
+        .hero-section .highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3.5rem;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--gray-600);
+        }
+
+        /* Advertisement Card */
+        .ad-card {
+            background: rgba(26, 31, 58, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: var(--card-shadow);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .ad-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        /* Left Content */
+        .ad-content {
+            padding-right: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--glow);
+        }
+
+        .ad-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .ad-title span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            font-size: 3rem;
+        }
+
+        .ad-description {
+            color: var(--gray-500);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Features List */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(0, 217, 255, 0.05);
+            padding: 1rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(0, 217, 255, 0.1);
+            border-color: rgba(0, 217, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(0, 153, 204, 0.2) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .feature-text h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-text p {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        /* Stats */
+        .stats-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(0, 217, 255, 0.05);
+            padding: 1rem;
+            border-radius: 16px;
+            flex: 1;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        /* CTA Button - Enhanced for APK Download */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--dark);
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 217, 255, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 217, 255, 0.5);
+        }
+
+        .cta-button i {
+            font-size: 1.2rem;
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            background: rgba(10, 14, 39, 0.6);
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .qr-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .qr-subtitle {
+            color: var(--gray-500);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .qr-wrapper {
+            background: white;
+            padding: 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        #qrCanvas {
+            width: 180px;
+            height: 180px;
+        }
+
+        .scan-instruction {
+            background: rgba(0, 217, 255, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .scan-instruction p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .scan-instruction i {
+            color: var(--primary);
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        .app-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .app-badge {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-500);
+        }
+
+        .app-badge i {
+            color: var(--primary);
+        }
+
+        /* Services Showcase */
+        .services-showcase {
+            margin-top: 4rem;
+        }
+
+        .section-title {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: rgba(26, 31, 58, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--dark);
+            font-size: 2rem;
+            box-shadow: var(--glow);
+        }
+
+        .service-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card p {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            margin-top: 4rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: rgba(26, 31, 58, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .author-info p {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 2rem;
+            color: var(--gray-500);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-logo i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--gray-500);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .creator-contact {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 217, 255, 0.2);
+            font-size: 0.85rem;
+        }
+
+        .creator-contact i {
+            color: var(--primary);
+            margin-right: 0.3rem;
+        }
+
+        /* Robot Popup */
+        .robot-chat {
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
+            width: 300px;
+            background: rgba(26, 31, 58, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            z-index: 100;
+            display: none;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .robot-chat.active {
+            display: block;
+        }
+
+        .robot-chat h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .robot-chat p {
+            color: var(--gray-500);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .robot-chat .close-chat {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            cursor: pointer;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .ad-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .ad-content {
+                padding-right: 0;
+            }
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-section h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero-section h2 {
+                font-size: 2rem;
+            }
+            .hero-section .highlight {
+                font-size: 2.5rem;
+            }
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .stats-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .ad-title {
+                font-size: 2rem;
+            }
+            .ad-title span {
+                font-size: 2.5rem;
+            }
+            .qr-wrapper {
+                padding: 1rem;
+            }
+            #qrCanvas {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements (unchanged) -->
+    <div class="bg-grid"></div>
+    <div class="circuit-lines">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="circuit" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                    <path d="M20 20 L80 20 M80 20 L80 80 M20 80 L80 80" stroke="rgba(0,217,255,0.1)" stroke-width="1" fill="none"/>
+                    <circle cx="20" cy="20" r="3" fill="rgba(0,217,255,0.2)"/>
+                    <circle cx="80" cy="20" r="3" fill="rgba(0,217,255,0.2)"/>
+                    <circle cx="80" cy="80" r="3" fill="rgba(0,217,255,0.2)"/>
+                    <circle cx="20" cy="80" r="3" fill="rgba(0,217,255,0.2)"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#circuit)"/>
+        </svg>
+    </div>
+
+    <!-- Robot Animation -->
+    <div class="robot-animation" onclick="toggleRobotChat()">
+        <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="30" width="60" height="50" rx="10" fill="url(#robotGrad)" stroke="#00d9ff" stroke-width="2"/>
+            <circle cx="40" cy="50" r="8" fill="#ffffff" class="robot-eye"/>
+            <circle cx="60" cy="50" r="8" fill="#ffffff" class="robot-eye"/>
+            <circle cx="40" cy="50" r="4" fill="#00d9ff"/>
+            <circle cx="60" cy="50" r="4" fill="#00d9ff"/>
+            <line x1="50" y1="30" x2="50" y2="15" stroke="#00d9ff" stroke-width="3"/>
+            <circle cx="50" cy="12" r="5" fill="#ff2e63"/>
+            <rect x="35" y="65" width="30" height="5" rx="2" fill="#00d9ff"/>
+            <rect x="10" y="45" width="10" height="15" rx="3" fill="#00d9ff"/>
+            <rect x="80" y="45" width="10" height="15" rx="3" fill="#00d9ff"/>
+            <defs>
+                <linearGradient id="robotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1f3a"/>
+                    <stop offset="100%" stop-color="#0a0e27"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <!-- Robot Chat Popup -->
+    <div class="robot-chat" id="robotChat">
+        <button class="close-chat" onclick="toggleRobotChat()"><i class="fas fa-times"></i></button>
+        <h4><i class="fas fa-robot"></i> Crafy </h4>
+        <p>👋 Download the Craft It Android App! Click the button below or scan QR to explore website.</p>
+        <p style="margin-top: 0.5rem;"><i class="fas fa-download"></i> Get the APK and start building!</p>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-robot"></i></div>
+            <h1>Craft It <span>vibe with crafts</span></h1>
+        </div>
+        <nav class="nav-menu">
+            <a class="active"><i class="fas fa-microchip"></i> Home</a>
+            <a onclick="showFeaturePopup('services')"><i class="fas fa-cogs"></i> Features</a>
+            <a onclick="showFeaturePopup('pricing')"><i class="fas fa-tag"></i> Pricing</a>
+            <a onclick="showFeaturePopup('contact')"><i class="fas fa-envelope"></i> Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h2>Build Your Future with <span class="highlight">Craft It </span></h2>
+            <p>Your AI-Powered Student Project Platform • Websites • Dashboards • Presentations • Essays • Content</p>
+        </div>
+
+        <!-- Main Advertisement Card -->
+        <div class="ad-card">
+            <div class="ad-grid">
+                <!-- Left Content -->
+                <div class="ad-content">
+                    <span class="badge"><i class="fas fa-microchip"></i> STUDENT SPECIAL</span>
+                    <h1 class="ad-title">
+                        Create Next-Gen Projects
+                        <span>With 20% Student Discount</span>
+                    </h1>
+                    <p class="ad-description">
+                        Get professional websites, interactive dashboards, stunning presentations, well-researched essays, and engaging content - all crafted by AI-enhanced experts at student-friendly prices.
+                    </p>
+                    <div class="features-list">
+                        <div class="feature-item"><div class="feature-icon"><i class="fas fa-laptop-code"></i></div><div class="feature-text"><h4>Website Development</h4><p>Frontend & Full Stack</p></div></div>
+                        <div class="feature-item"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><div class="feature-text"><h4>Dashboard Creation</h4><p>Analytics & Interactive</p></div></div>
+                        <div class="feature-item"><div class="feature-icon"><i class="fas fa-file-powerpoint"></i></div><div class="feature-text"><h4>Presentation Slides</h4><p>Basic to Animated</p></div></div>
+                        <div class="feature-item"><div class="feature-icon"><i class="fas fa-pen-fancy"></i></div><div class="feature-text"><h4>Essay Writing</h4><p>500 to 2000+ words</p></div></div>
+                    </div>
+                    <div class="stats-container">
+                        <div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">Happy Students</div></div>
+                        <div class="stat-item"><div class="stat-number">1000+</div><div class="stat-label">Projects Done</div></div>
+                        <div class="stat-item"><div class="stat-number">20%</div><div class="stat-label">Student Discount</div></div>
+                    </div>
+                    <!-- Launch Button: Downloads craftIt.apk -->
+                    <button class="cta-button" onclick="downloadApk()">
+                        <i class="fas fa-download"></i>
+                        Launch Craft It App
+                        <i class="fas fa-android"></i>
+                    </button>
+                </div>
+
+                <!-- Right Content - QR Code Section (points to website) -->
+                <div class="qr-section">
+                    <h2 class="qr-title">Scan to Open</h2>
+                    <p class="qr-subtitle">Open Craft It website instantly on your phone</p>
+                    <div class="qr-wrapper"><div id="qrCanvas"></div></div>
+                    <div class="scan-instruction">
+                        <p><i class="fas fa-camera"></i> Scan this QR code with your phone camera <i class="fas fa-arrow-right"></i></p>
+                    </div>
+                    <div class="app-badges">
+                        <span class="app-badge"><i class="fas fa-mobile-alt"></i> Open in Browser</span>
+                        <span class="app-badge"><i class="fas fa-shield-alt"></i> Secure Payment</span>
+                    </div>
+                    <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--gray-500);"><i class="fas fa-clock"></i> Takes only 2 minutes to book</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Showcase (unchanged) -->
+        <div class="services-showcase">
+            <h2 class="section-title">⚡ Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card"><div class="service-icon"><i class="fas fa-code"></i></div><h3>Frontend Website</h3><p>HTML, CSS, JavaScript, React</p></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-layer-group"></i></div><h3>Full Stack</h3><p>Node.js, Python, Java, PHP</p></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-chart-pie"></i></div><h3>Dashboard</h3><p>Analytics & Interactive UI</p></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-file-powerpoint"></i></div><h3>Presentations</h3><p>Premium & Animated Slides</p></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-pen-fancy"></i></div><h3>Essay Writing</h3><p>Research & Academic Papers</p></div>
+            </div>
+        </div>
+
+        <!-- Testimonials (unchanged) -->
+        <div class="testimonials">
+            <h2 class="section-title">💬 Student Reviews</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card"><i class="fas fa-quote-right quote-icon"></i><p class="testimonial-text">"Got my full stack website done in just 3 days. The code quality was amazing and the student discount helped me save a lot!"</p><div class="testimonial-author"><div class="author-avatar">R</div><div class="author-info"><h4>Rahul</h4><p>B.Tech CSE</p></div></div></div>
+                <div class="testimonial-card"><i class="fas fa-quote-right quote-icon"></i><p class="testimonial-text">"The interactive dashboard they created for my college project was exactly what I needed. Clean code and professional UI. Highly recommended!"</p><div class="testimonial-author"><div class="author-avatar">P</div><div class="author-info"><h4>Peter</h4><p>MCA</p></div></div></div>
+                <div class="testimonial-card"><i class="fas fa-quote-right quote-icon"></i><p class="testimonial-text">"My research paper was delivered before deadline with proper citations and plagiarism check. Great tech service for students!"</p><div class="testimonial-author"><div class="author-avatar">A</div><div class="author-info"><h4>Aditya Kumar</h4><p>PHD</p></div></div></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo"><i class="fas fa-robot"></i><span style="font-weight: 600;">Craft It</span></div>
+                <div class="footer-links">
+                    <a href="#" onclick="showFeaturePopup('about')">About</a>
+                    <a href="#" onclick="showFeaturePopup('services')">Services</a>
+                    <a href="#" onclick="showFeaturePopup('pricing')">Pricing</a>
+                    <a href="#" onclick="showFeaturePopup('contact')">Contact</a>
+                    <a href="#" onclick="showFeaturePopup('faq')">FAQ</a>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/craft.itofficial/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/CraftItoficialx"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/craftit-site-580a23402/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/craftitsite"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="creator-contact">
+                <p><i class="fas fa-phone"></i> Creator: +91 6006573367 | <i class="fas fa-envelope"></i> craftitsite@gmail.com</p>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem;">© 2026 Craft It. All rights reserved. | Student Project Platform</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Popup Modal -->
+    <div class="popup-modal" id="featurePopup">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closeFeaturePopup()"><i class="fas fa-times"></i></button>
+            <div class="popup-icon" id="featurePopupIcon"><i class="fas fa-microchip"></i></div>
+            <h3 id="featurePopupTitle">Craft It Features</h3>
+            <p id="featurePopupMessage">Scan the QR code to open the app and explore all features!</p>
+            <button class="btn btn-primary" onclick="closeFeaturePopup()"><i class="fas fa-check"></i> Got it</button>
+        </div>
+    </div>
+
+    <style>
+        .popup-modal {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .popup-modal.active { display: flex; }
+        .popup-content {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%);
+            border-radius: 24px; padding: 2rem; max-width: 400px; width: 90%;
+            text-align: center; border: 1px solid rgba(0, 217, 255, 0.3);
+        }
+        .popup-icon {
+            width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem; color: var(--dark); font-size: 2.5rem;
+        }
+        .popup-content h3 { font-size: 1.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .popup-content p { color: var(--gray-500); margin-bottom: 1.5rem; }
+        .popup-content .btn { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: var(--dark); padding: 1rem 2rem; border: none; border-radius: 12px; cursor: pointer; }
+        .popup-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; color: var(--gray-500); cursor: pointer; }
+    </style>
+
+    <script>
+        // APK Download URL (craftIt.apk)
+        const APK_DOWNLOAD_URL = 'craftIt.apk';
+        // Web URL for QR Code (craftit website)
+        const TARGET_WEBSITE_URL = 'https://banshikasharma.github.io/craftit/';
+        
+        const CREATOR_PHONE = '6006573367';
+        const CREATOR_EMAIL = 'craftitsite@gmail.com';
+
+        // QR code generation for website
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQRCode();
+        });
+
+        function generateQRCode() {
+            const qrCanvas = document.getElementById('qrCanvas');
+            qrCanvas.innerHTML = '';
+            QRCode.toCanvas(TARGET_WEBSITE_URL, {
+                width: 180, margin: 2,
+                color: { dark: '#00d9ff', light: '#ffffff' }
+            }, function(error, canvas) {
+                if (error) console.error('QR Error:', error);
+                else qrCanvas.appendChild(canvas);
+            });
+        }
+
+        // APK Download function
+        function downloadApk() {
+            // Create a temporary anchor element to trigger download
+            const link = document.createElement('a');
+            link.href = APK_DOWNLOAD_URL;
+            link.download = 'CraftIt.apk';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show success toast/popup
+            showFeaturePopup('download');
+        }
+
+        function toggleRobotChat() {
+            document.getElementById('robotChat').classList.toggle('active');
+        }
+
+        function showFeaturePopup(feature) {
+            const popup = document.getElementById('featurePopup');
+            const icon = document.getElementById('featurePopupIcon');
+            const title = document.getElementById('featurePopupTitle');
+            const message = document.getElementById('featurePopupMessage');
+            
+            switch(feature) {
+                case 'services':
+                    icon.innerHTML = '<i class="fas fa-cogs"></i>';
+                    title.innerHTML = '🚀 Services';
+                    message.innerHTML = 'We offer Website Development, Dashboard Creation, Presentation Slides, Essay Writing, and Content Generation. All with 20% student discount!';
+                    break;
+                case 'pricing':
+                    icon.innerHTML = '<i class="fas fa-tag"></i>';
+                    title.innerHTML = '💰 Pricing';
+                    message.innerHTML = 'Frontend: ₹5,000 | Full Stack: ₹24,000 | Dashboard: ₹8,000+ | Presentations: ₹2,000+ | Essays: ₹1,000+. All prices after 20% discount!';
+                    break;
+                case 'contact':
+                    icon.innerHTML = '<i class="fas fa-envelope"></i>';
+                    title.innerHTML = '📞 Contact Support';
+                    message.innerHTML = `Phone: +91 ${CREATOR_PHONE}<br>Email: ${CREATOR_EMAIL}<br><br>Scan QR or download APK to get started!`;
+                    break;
+                case 'about':
+                    icon.innerHTML = '<i class="fas fa-info-circle"></i>';
+                    title.innerHTML = '🤖 About Craft It';
+                    message.innerHTML = 'Craft It Tech is a student-friendly AI-enhanced platform where you can get professional websites, dashboards, presentations, essays, and content created just for you!';
+                    break;
+                case 'faq':
+                    icon.innerHTML = '<i class="fas fa-question-circle"></i>';
+                    title.innerHTML = '❓ FAQ';
+                    message.innerHTML = 'Q: How to book? A: Download APK or scan QR → Select services → Pay via UPI → Get your project!\n\nPayment: Google Pay, PhonePe, Amazon Pay, BHIM UPI';
+                    break;
+                case 'download':
+                    icon.innerHTML = '<i class="fas fa-download"></i>';
+                    title.innerHTML = '📱 Download Started';
+                    message.innerHTML = 'Your Craft It APK download has begun! Install the app to access all tech services with student discount.';
+                    break;
+                default:
+                    icon.innerHTML = '<i class="fas fa-microchip"></i>';
+                    title.innerHTML = '✨ Craft It Features';
+                    message.innerHTML = 'Download the APK or scan QR to explore all tech features! Get 20% student discount on your first project.';
+            }
+            popup.classList.add('active');
+        }
+
+        function closeFeaturePopup() {
+            document.getElementById('featurePopup').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
